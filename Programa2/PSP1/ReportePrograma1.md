@@ -18,7 +18,7 @@ La herramienta se ejecuta desde la carpeta `Programa2/PSP1` con comandos como:
 
 ```bash
 javac *.java
-java App ProgramaPrueba1.java ProgramaPrueba2.java
+java AnalizadorLOC ProgramaPrueba1.java ProgramaPrueba2.java
 ```
 
 ## 2. Uso de PSP0.1
@@ -82,8 +82,7 @@ existente de `Programa1/PSP1` porque cambiarlo habría roto su propósito origin
 
 | Archivo | Responsabilidad |
 | --- | --- |
-| `App.java` | Punto de entrada ejecutable con `java App`; delega en `AnalizadorLOC`. |
-| `AnalizadorLOC.java` | Orquestador del análisis; valida argumentos, coordina el análisis e imprime resultados. |
+| `AnalizadorLOC.java` | Clase principal; valida argumentos, coordina el análisis e imprime resultados. |
 | `ProcesadorArchivo.java` | Lee archivos fuente y cuenta líneas físicas. |
 | `LimpiadorCodigo.java` | Elimina comentarios sin alterar cadenas ni caracteres. |
 | `ContadorLOC.java` | Aplica el estándar de conteo LOC total y por rango. |
@@ -109,13 +108,13 @@ javac *.java
 Desde la carpeta `Programa2/PSP1`:
 
 ```bash
-java App ProgramaPrueba1.java ProgramaPrueba2.java
+java AnalizadorLOC ProgramaPrueba1.java ProgramaPrueba2.java
 ```
 
 También se pueden analizar otros archivos:
 
 ```bash
-java App Archivo1.java Archivo2.java Archivo3.java
+java AnalizadorLOC Archivo1.java Archivo2.java Archivo3.java
 ```
 
 ## 9. Casos de prueba
@@ -204,9 +203,7 @@ Variable valor declarada e inicializada en la misma línea
 
 ## 12. Justificación de refactorización
 
-Se agregó `App.java` como main visible del programa para facilitar la ejecución
-con `java App`, manteniendo `AnalizadorLOC` como orquestador reutilizable. La
-solución se dividió en clases pequeñas para mejorar claridad, mantenibilidad y
+La solución se dividió en clases pequeñas para mejorar claridad, mantenibilidad y
 exactitud:
 
 - `LimpiadorCodigo` evita mezclar limpieza de comentarios con conteo LOC.
