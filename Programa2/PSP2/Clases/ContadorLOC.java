@@ -1,6 +1,7 @@
 /**
  * Archivo de soporte para conteo LOC del Programa 1 PSP0.1.
  */
+package Clases;
 import java.util.List;
 
 /**

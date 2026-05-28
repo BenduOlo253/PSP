@@ -1,6 +1,7 @@
 /**
  * Archivo de soporte para almacenar resultados del Programa 1 PSP0.1.
  */
+package Clases;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

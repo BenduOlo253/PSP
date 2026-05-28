@@ -1,6 +1,7 @@
 /**
  * Archivo de soporte para lectura de fuentes del Programa 1 PSP0.1.
  */
+package Clases;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;

@@ -1,6 +1,7 @@
 /**
  * Archivo de soporte para detectar variables del Programa 1 PSP0.1.
  */
+package Clases;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

@@ -1,6 +1,7 @@
 /**
  * Archivo de soporte para detectar metodos del Programa 1 PSP0.1.
  */
+package Clases;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;

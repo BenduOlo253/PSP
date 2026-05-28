@@ -2,6 +2,7 @@
  * Almacena las metricas calculadas para una clase Java analizada.
  * Forma parte del Programa 1 de PSP0.1 para conteo de LOC.
  */
+package Clases;
 public class ResultadoClase {
     private final String nombreClase;
     private final int lineaInicio;

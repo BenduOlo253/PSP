@@ -1,6 +1,7 @@
 /**
  * Archivo de soporte para limpieza de comentarios del Programa 1 PSP0.1.
  */
+package Clases;
 import java.util.ArrayList;
 import java.util.List;
 
