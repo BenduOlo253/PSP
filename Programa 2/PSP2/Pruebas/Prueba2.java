@@ -1,4 +1,4 @@
-public class PruebaComentarios {
+public class Prueba2 {
 
     public void probar() {
         int a = 1, b = 2;

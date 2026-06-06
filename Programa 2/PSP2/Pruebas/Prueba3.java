@@ -1,4 +1,4 @@
-public class PruebaLineaPartida {
+public class Prueba3 {
 
     public void mostrarError(int lineNumber) {
         System.out.println("la linea " +
