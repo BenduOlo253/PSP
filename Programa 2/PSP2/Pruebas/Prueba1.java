@@ -1,7 +1,7 @@
 
 /**
- * Clase de prueba para demostrar la estructura básica de una clase en Java.
- * Contiene un constructor, un método para saludar y una clase auxiliar para sumar dos números.
+ * Clase de prueba para demostrar la estructura basica de una clase en Java.
+ * Contiene un constructor, un metodo para saludar y una clase auxiliar para sumar dos numeros.
  */
 
 public class Prueba1 {

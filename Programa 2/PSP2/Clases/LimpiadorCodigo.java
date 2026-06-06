@@ -6,17 +6,17 @@ import java.util.List;
 /**
  * Nombre del archivo: LimpiadorCodigo.java
  * Autor: Jose Manuel Roberto Badillo
- * Fecha de creación: 31/05/2026
- * Versión: 1.0
- * Descripción: Limpia comentarios y elementos no contables del código fuente.
+ * Fecha de creacion: 31/05/2026
+ * Version: 1.0
+ * Descripcion: Limpia comentarios y elementos no contables del codigo fuente.
  */
 public class LimpiadorCodigo {
 
     /**
-     * Elimina comentarios de línea, comentarios de bloque y JavaDoc.
+     * Elimina comentarios de linea, comentarios de bloque y JavaDoc.
      *
-     * @param lineasOriginales líneas originales del archivo
-     * @return líneas limpias para el conteo
+     * @param lineasOriginales lineas originales del archivo
+     * @return lineas limpias para el conteo
      */
     public List<String> limpiarCodigo(List<String> lineasOriginales) {
         List<String> lineasLimpias = new ArrayList<>();
@@ -94,7 +94,7 @@ public class LimpiadorCodigo {
             posicion--;
         }
 
-        // Un número impar de diagonales indica que el carácter está escapado.
+        // Un numero impar de diagonales indica que el caracter esta escapado.
         return contadorBarras % 2 != 0;
     }
 }

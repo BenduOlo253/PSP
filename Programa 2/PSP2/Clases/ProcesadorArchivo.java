@@ -9,9 +9,9 @@ import java.util.List;
 /**
  * Nombre del archivo: ProcesadorArchivo.java
  * Autor: Jose Manuel Roberto Badillo
- * Fecha de creación: 31/05/2026
- * Versión: 1.0
- * Descripción: Procesa y valida archivos fuente Java.
+ * Fecha de creacion: 31/05/2026
+ * Version: 1.0
+ * Descripcion: Procesa y valida archivos fuente Java.
  */
 public class ProcesadorArchivo {
 
@@ -26,7 +26,7 @@ public class ProcesadorArchivo {
         validarRuta(rutaArchivo);
 
         if (!esArchivoJava(rutaArchivo)) {
-            throw new IllegalArgumentException("El archivo debe tener extensión .java.");
+            throw new IllegalArgumentException("El archivo debe tener extension .java.");
         }
 
         Path ruta = Paths.get(rutaArchivo);
@@ -45,10 +45,10 @@ public class ProcesadorArchivo {
     }
 
     /**
-     * Lee todas las líneas físicas del archivo.
+     * Lee todas las lineas fisicas del archivo.
      *
      * @param rutaArchivo ruta del archivo
-     * @return líneas físicas del archivo
+     * @return lineas fisicas del archivo
      * @throws IOException si ocurre un error al leer
      */
     public List<String> leerArchivo(String rutaArchivo) throws IOException {
@@ -57,7 +57,7 @@ public class ProcesadorArchivo {
     }
 
     /**
-     * Verifica si el archivo tiene extensión Java.
+     * Verifica si el archivo tiene extension Java.
      *
      * @param rutaArchivo ruta del archivo
      * @return true si termina en .java
@@ -68,10 +68,10 @@ public class ProcesadorArchivo {
     }
 
     /**
-     * Determina si existen líneas de código contable.
+     * Determina si existen lineas de codigo contable.
      *
-     * @param lineasLimpias líneas después de limpiar comentarios
-     * @return true si hay código contable
+     * @param lineasLimpias lineas despues de limpiar comentarios
+     * @return true si hay codigo contable
      */
     public boolean contieneCodigo(List<String> lineasLimpias) {
         if (lineasLimpias == null || lineasLimpias.isEmpty()) {
@@ -89,12 +89,12 @@ public class ProcesadorArchivo {
 
     private void validarRuta(String rutaArchivo) {
         if (rutaArchivo == null || rutaArchivo.trim().isEmpty()) {
-            throw new IllegalArgumentException("La ruta no puede estar vacía.");
+            throw new IllegalArgumentException("La ruta no puede estar vacia.");
         }
     }
 
     private boolean esLineaConCodigo(String linea) {
-        // Las llaves solas no representan código funcional según el estándar.
+        // Las llaves solas no representan codigo funcional segun el estandar.
         return !linea.isEmpty()
                 && !linea.equals("{")
                 && !linea.equals("}")

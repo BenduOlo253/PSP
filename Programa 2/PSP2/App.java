@@ -8,7 +8,7 @@ import java.util.Scanner;
  * Autor: Jose Manuel Roberto Badillo
  * Fecha de creacion: 31/05/2026
  * Version: 1.0
- * Descripción: Clase principal para ejecutar el contador LOC.
+ * Descripcion: Clase principal para ejecutar el contador LOC.
  */
 public class App {
 
@@ -40,16 +40,16 @@ public class App {
                     continue;
                 }
 
-                // Se valida antes de leer para evitar errores por rutas inválidas.
+                // Se valida antes de leer para evitar errores por rutas invalidas.
                 procesadorArchivo.validarArchivoJava(rutaArchivo);
 
                 List<String> lineasOriginales = procesadorArchivo.leerArchivo(rutaArchivo);
 
-                // El limpiador conserva las líneas, pero elimina contenido no contable.
+                // El limpiador conserva las lineas, pero elimina contenido no contable.
                 List<String> lineasLimpias = limpiadorCodigo.limpiarCodigo(lineasOriginales);
 
                 if (!procesadorArchivo.contieneCodigo(lineasLimpias)) {
-                    System.out.println("El archivo no contiene código Java contable.");
+                    System.out.println("El archivo no contiene codigo Java contable.");
                     continue;
                 }
 
@@ -67,11 +67,11 @@ public class App {
                 System.out.println("No se pudo leer el archivo.");
                 System.out.println("Detalle: " + excepcion.getMessage());
             } catch (IllegalArgumentException excepcion) {
-                System.out.println("Entrada inválida.");
+                System.out.println("Entrada invalida.");
                 System.out.println("Detalle: " + excepcion.getMessage());
             } catch (Exception excepcion) {
-                // Este catch evita que la aplicación termine por errores no previstos.
-                System.out.println("Ocurrió un error inesperado.");
+                // Este catch evita que la aplicacion termine por errores no previstos.
+                System.out.println("Ocurrio un error inesperado.");
                 System.out.println("Detalle: " + excepcion.getMessage());
             }
 
@@ -92,7 +92,7 @@ public class App {
 
     private static void mostrarResultado(ContadorLOC.ResultadoAnalisis resultado) {
         System.out.println();
-        System.out.println("Resultado del análisis");
+        System.out.println("Resultado del analisis");
         System.out.println("Archivo analizado: " + resultado.getNombreArchivo());
         System.out.println("------------------------------------------------------------");
 
@@ -123,7 +123,7 @@ public class App {
 
                 String total = "";
 
-                // El tamaño total se imprime solo en la última fila del programa.
+                // El tamano total se imprime solo en la ultima fila del programa.
                 if (indice == resultado.getResultadosClase().size() - 1) {
                     total = String.valueOf(resultado.getTotalLOC());
                 }
@@ -140,9 +140,9 @@ public class App {
         }
 
         System.out.println("------------------------------------------------------------");
-        System.out.println("Total de líneas físicas del archivo: "
+        System.out.println("Total de lineas fisicas del archivo: "
                 + resultado.getTotalLineasFisicas());
-        System.out.println("Total de LOC lógicas contadas: "
+        System.out.println("Total de LOC logicas contadas: "
                 + resultado.getTotalLOC());
         System.out.println("Total de clases: "
                 + resultado.getResultadosClase().size());
@@ -154,7 +154,7 @@ public class App {
 
             for (String variable : resultado.getVariablesInicializadas()) {
                 System.out.println("Variable " + variable
-                        + " declarada e inicializada en la misma línea");
+                        + " declarada e inicializada en la misma linea");
             }
         }
 

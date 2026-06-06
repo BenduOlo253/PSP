@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 /**
  * Nombre del archivo: ContadorLOC.java
  * Autor: Jose Manuel Roberto Badillo
- * Fecha de creación: 31/05/2026
- * Versión: 1.0
- * Descripción: Cuenta LOC, clases, métodos y variables inicializadas.
+ * Fecha de creacion: 31/05/2026
+ * Version: 1.0
+ * Descripcion: Cuenta LOC, clases, metodos y variables inicializadas.
  */
 public class ContadorLOC {
 
@@ -28,13 +28,13 @@ public class ContadorLOC {
     };
 
     /**
-     * Analiza el código completo de un archivo Java.
+     * Analiza el codigo completo de un archivo Java.
      *
-     * @param lineasCodigo líneas limpias del archivo
-     * @param totalLineasFisicas total de líneas físicas originales
-     * @param numeroPrograma número de programa analizado
+     * @param lineasCodigo lineas limpias del archivo
+     * @param totalLineasFisicas total de lineas fisicas originales
+     * @param numeroPrograma numero de programa analizado
      * @param nombreArchivo nombre o ruta del archivo
-     * @return resultado del análisis
+     * @return resultado del analisis
      */
     public ResultadoAnalisis analizarCodigo(List<String> lineasCodigo,
             int totalLineasFisicas, int numeroPrograma, String nombreArchivo) {
@@ -54,7 +54,7 @@ public class ContadorLOC {
     /**
      * Cuenta el total de LOC de un archivo limpio.
      *
-     * @param lineasCodigo líneas limpias del archivo
+     * @param lineasCodigo lineas limpias del archivo
      * @return total de LOC
      */
     public int contarLOC(List<String> lineasCodigo) {
@@ -74,10 +74,10 @@ public class ContadorLOC {
     }
 
     /**
-     * Cuenta las LOC de una línea específica.
+     * Cuenta las LOC de una linea especifica.
      *
-     * @param linea línea de código
-     * @return cantidad de LOC de la línea
+     * @param linea linea de codigo
+     * @return cantidad de LOC de la linea
      */
     public int contarLinea(String linea) {
         if (linea == null) {
@@ -90,7 +90,7 @@ public class ContadorLOC {
             return 0;
         }
 
-        // Las declaraciones múltiples cuentan una LOC por variable.
+        // Las declaraciones multiples cuentan una LOC por variable.
         if (esDeclaracionMultiple(lineaLimpia)) {
             return contarDeclaracionesMultiples(lineaLimpia);
         }
@@ -99,12 +99,12 @@ public class ContadorLOC {
     }
 
     /**
-     * Agrupa líneas físicas que pertenecen a una misma instrucción Java.
-     * Esto permite que una instrucción partida por formato visual cuente como
-     * una sola LOC lógica, por ejemplo un println dividido en varias líneas.
+     * Agrupa lineas fisicas que pertenecen a una misma instruccion Java.
+     * Esto permite que una instruccion partida por formato visual cuente como
+     * una sola LOC logica, por ejemplo un println dividido en varias lineas.
      *
-     * @param lineasCodigo líneas limpias del archivo
-     * @return instrucciones lógicas normalizadas
+     * @param lineasCodigo lineas limpias del archivo
+     * @return instrucciones logicas normalizadas
      */
     private List<String> normalizarLineasLogicas(List<String> lineasCodigo) {
         List<String> lineasLogicas = new ArrayList<>();
@@ -146,12 +146,12 @@ public class ContadorLOC {
     }
 
     /**
-     * Determina si la línea actual cierra una instrucción lógica.
-     * Se consideran cierres válidos el punto y coma, la apertura de bloque
+     * Determina si la linea actual cierra una instruccion logica.
+     * Se consideran cierres validos el punto y coma, la apertura de bloque
      * y el cierre de bloque.
      *
-     * @param linea línea limpia actual
-     * @return true si la instrucción lógica terminó
+     * @param linea linea limpia actual
+     * @return true si la instruccion logica termino
      */
     private boolean terminaInstruccionLogica(String linea) {
         if (linea == null) {
@@ -228,7 +228,7 @@ public class ContadorLOC {
                 encontroLlaveApertura = true;
             }
 
-            // El balance en cero indica que terminó el bloque de la clase.
+            // El balance en cero indica que termino el bloque de la clase.
             if (encontroLlaveApertura && balanceLlaves == 0) {
                 return indice;
             }
@@ -271,7 +271,7 @@ public class ContadorLOC {
 
         String nombreMetodo = tokens[tokens.length - 1];
 
-        // El constructor se cuenta como método para el reporte PSP.
+        // El constructor se cuenta como metodo para el reporte PSP.
         if (nombreMetodo.equals(nombreClase)) {
             return true;
         }
@@ -447,7 +447,7 @@ public class ContadorLOC {
                         break;
                 }
 
-                // Solo se separan comas que no pertenecen a métodos o genéricos.
+                // Solo se separan comas que no pertenecen a metodos o genericos.
                 if (caracter == ',' && nivelParentesis == 0
                         && nivelAngulares == 0) {
                     partes.add(actual.toString());
@@ -597,7 +597,7 @@ public class ContadorLOC {
     }
 
     /**
-     * Almacena las métricas completas de un archivo analizado.
+     * Almacena las metricas completas de un archivo analizado.
      */
     public static class ResultadoAnalisis {
 
@@ -609,11 +609,11 @@ public class ContadorLOC {
         private final List<String> variablesInicializadas;
 
         /**
-         * Crea un resultado general del análisis.
+         * Crea un resultado general del analisis.
          *
-         * @param numeroPrograma número de programa
+         * @param numeroPrograma numero de programa
          * @param nombreArchivo nombre del archivo
-         * @param totalLineasFisicas total de líneas físicas
+         * @param totalLineasFisicas total de lineas fisicas
          */
         public ResultadoAnalisis(int numeroPrograma, String nombreArchivo,
                 int totalLineasFisicas) {
@@ -662,7 +662,7 @@ public class ContadorLOC {
     }
 
     /**
-     * Almacena las métricas correspondientes a una clase Java.
+     * Almacena las metricas correspondientes a una clase Java.
      */
     public static class ResultadoClase {
 
@@ -674,8 +674,8 @@ public class ContadorLOC {
          * Crea un resultado de clase.
          *
          * @param nombreClase nombre de la clase
-         * @param numeroMetodos métodos detectados
-         * @param tamanioClase tamaño de clase en LOC
+         * @param numeroMetodos metodos detectados
+         * @param tamanioClase tamano de clase en LOC
          */
         public ResultadoClase(String nombreClase, int numeroMetodos,
                 int tamanioClase) {
