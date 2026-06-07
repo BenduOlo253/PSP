@@ -6,8 +6,8 @@ import java.util.Scanner;
 /**
  * Nombre del archivo: App.java
  * Autor: Jose Manuel Roberto Badillo
- * Fecha de creación: 31/05/2026
- * Versión: 1.0
+ * Fecha de creacion: 31/05/2026
+ * Version: 1.0
  * Descripción: Clase principal para ejecutar el contador LOC.
  */
 public class App {

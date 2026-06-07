@@ -3,6 +3,7 @@ package Clases;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class ProcesadorArchivo {
             throw new IllegalArgumentException("El archivo debe tener extensión .java.");
         }
 
-        Path ruta = Path.of(rutaArchivo);
+        Path ruta = Paths.get(rutaArchivo);
 
         if (!Files.exists(ruta)) {
             throw new IllegalArgumentException("El archivo no existe.");
@@ -52,7 +53,7 @@ public class ProcesadorArchivo {
      */
     public List<String> leerArchivo(String rutaArchivo) throws IOException {
         validarArchivoJava(rutaArchivo);
-        return Files.readAllLines(Path.of(rutaArchivo));
+        return Files.readAllLines(Paths.get(rutaArchivo));
     }
 
     /**

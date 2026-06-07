@@ -431,12 +431,20 @@ public class ContadorLOC {
 
             if (!dentroCadena && !dentroCaracter) {
                 switch (caracter) {
-                    case '(' -> nivelParentesis++;
-                    case ')' -> nivelParentesis--;
-                    case '<' -> nivelAngulares++;
-                    case '>' -> nivelAngulares--;
-                    default -> {
-                    }
+                    case '(':
+                        nivelParentesis++;
+                        break;
+                    case ')':
+                        nivelParentesis--;
+                        break;
+                    case '<':
+                        nivelAngulares++;
+                        break;
+                    case '>':
+                        nivelAngulares--;
+                        break;
+                    default:
+                        break;
                 }
 
                 // Solo se separan comas que no pertenecen a métodos o genéricos.
