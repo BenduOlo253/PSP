@@ -1,4 +1,3 @@
-
 /**
  * Clase de prueba para demostrar la estructura basica de una clase en Java.
  * Contiene un constructor, un metodo para saludar y una clase auxiliar para sumar dos numeros.
