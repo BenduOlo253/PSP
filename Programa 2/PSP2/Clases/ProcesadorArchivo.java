@@ -30,17 +30,17 @@ public class ProcesadorArchivo {
             throw new IllegalArgumentException("El archivo debe tener extension .java.");
         }
 
-        Path ruta = Paths.get(rutaArchivo);
+        Path rutaArchivoPath = Paths.get(rutaArchivo);
 
-        if (!Files.exists(ruta)) {
+        if (!Files.exists(rutaArchivoPath)) {
             throw new IllegalArgumentException("El archivo no existe.");
         }
 
-        if (!Files.isRegularFile(ruta)) {
+        if (!Files.isRegularFile(rutaArchivoPath)) {
             throw new IllegalArgumentException("La ruta no pertenece a un archivo.");
         }
 
-        if (!Files.isReadable(ruta)) {
+        if (!Files.isReadable(rutaArchivoPath)) {
             throw new IllegalArgumentException("El archivo no se puede leer.");
         }
     }
@@ -79,8 +79,8 @@ public class ProcesadorArchivo {
             return false;
         }
 
-        for (String linea : lineasLimpias) {
-            if (linea != null && esLineaConCodigo(linea.trim())) {
+        for (String lineaLimpia : lineasLimpias) {
+            if (lineaLimpia != null && esLineaConCodigo(lineaLimpia.trim())) {
                 return true;
             }
         }

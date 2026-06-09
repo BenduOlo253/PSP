@@ -118,24 +118,24 @@ public class App {
         } else {
             for (int indice = 0; indice < resultado.getResultadosClase().size();
                     indice++) {
-                ContadorLOC.ResultadoClase clase = resultado
+                ContadorLOC.ResultadoClase resultadoClaseActual = resultado
                         .getResultadosClase()
                         .get(indice);
 
-                String total = "";
+                String totalLocTexto = "";
 
                 // El tamano total se imprime solo en la ultima fila del programa.
                 if (indice == resultado.getResultadosClase().size() - 1) {
-                    total = String.valueOf(resultado.getTotalLOC());
+                    totalLocTexto = String.valueOf(resultado.getTotalLOC());
                 }
 
                 System.out.printf(
                         "%-12d %-20s %-18d %-18d %-14s%n",
                         resultado.getNumeroPrograma(),
-                        clase.getNombreClase(),
-                        clase.getNumeroMetodos(),
-                        clase.getTamanioClase(),
-                        total
+                        resultadoClaseActual.getNombreClase(),
+                        resultadoClaseActual.getNumeroMetodos(),
+                        resultadoClaseActual.getTamanioClase(),
+                        totalLocTexto
                 );
             }
         }
@@ -162,6 +162,6 @@ public class App {
         System.out.println("------------------------------------------------------------");
         System.out.println("Ingrese enter para continuar...");
         Scanner scanner = new Scanner(System.in);
-        String salida = scanner.nextLine();
+        String entradaContinuacion = scanner.nextLine();
     }
 }
