@@ -39,17 +39,17 @@ public class ContadorLOC {
      */
     public ResultadoAnalisis analizarCodigo(List<String> lineasCodigo,
             int totalLineasFisicas, int numeroPrograma, String nombreArchivo) {
-        ResultadoAnalisis resultado = new ResultadoAnalisis(
+        ResultadoAnalisis resultadoAnalisis = new ResultadoAnalisis(
                 numeroPrograma,
                 nombreArchivo,
                 totalLineasFisicas
         );
 
-        resultado.setTotalLOC(contarLOC(lineasCodigo));
-        analizarClases(lineasCodigo, resultado);
-        analizarVariables(lineasCodigo, resultado);
+        resultadoAnalisis.setTotalLOC(contarLOC(lineasCodigo));
+        analizarClases(lineasCodigo, resultadoAnalisis);
+        analizarVariables(lineasCodigo, resultadoAnalisis);
 
-        return resultado;
+        return resultadoAnalisis;
     }
 
     /**
@@ -59,19 +59,19 @@ public class ContadorLOC {
      * @return total de LOC
      */
     public int contarLOC(List<String> lineasCodigo) {
-        int totalLOC = 0;
+        int totalLoc = 0;
 
         if (lineasCodigo == null) {
-            return totalLOC;
+            return totalLoc;
         }
 
         List<String> lineasLogicas = normalizarLineasLogicas(lineasCodigo);
 
         for (String linea : lineasLogicas) {
-            totalLOC += contarLinea(linea);
+            totalLoc += contarLinea(linea);
         }
 
-        return totalLOC;
+        return totalLoc;
     }
 
     /**
@@ -114,7 +114,7 @@ public class ContadorLOC {
             return lineasLogicas;
         }
 
-        StringBuilder acumulador = new StringBuilder();
+        StringBuilder instruccionLogicaActual = new StringBuilder();
 
         for (String linea : lineasCodigo) {
             if (linea == null) {
@@ -127,20 +127,20 @@ public class ContadorLOC {
                 continue;
             }
 
-            if (acumulador.length() > 0) {
-                acumulador.append(' ');
+            if (instruccionLogicaActual.length() > 0) {
+                instruccionLogicaActual.append(' ');
             }
 
-            acumulador.append(lineaLimpia);
+            instruccionLogicaActual.append(lineaLimpia);
 
             if (terminaInstruccionLogica(lineaLimpia)) {
-                lineasLogicas.add(acumulador.toString().trim());
-                acumulador.setLength(0);
+                lineasLogicas.add(instruccionLogicaActual.toString().trim());
+                instruccionLogicaActual.setLength(0);
             }
         }
 
-        if (acumulador.length() > 0) {
-            lineasLogicas.add(acumulador.toString().trim());
+        if (instruccionLogicaActual.length() > 0) {
+            lineasLogicas.add(instruccionLogicaActual.toString().trim());
         }
 
         return lineasLogicas;
@@ -179,16 +179,16 @@ public class ContadorLOC {
 
         for (int indice = 0; indice < lineasCodigo.size(); indice++) {
             String linea = lineasCodigo.get(indice);
-            Matcher matcher = PATRON_CLASE.matcher(linea);
+            Matcher matcherClase = PATRON_CLASE.matcher(linea);
 
-            if (matcher.matches()) {
-                String nombreClase = matcher.group(1);
-                int finClase = encontrarFinClase(lineasCodigo, indice);
+            if (matcherClase.matches()) {
+                String nombreClase = matcherClase.group(1);
+                int indiceFinClase = encontrarFinClase(lineasCodigo, indice);
 
                 ResultadoClase resultadoClase = analizarClase(
                         lineasCodigo,
                         indice,
-                        finClase,
+                        indiceFinClase,
                         nombreClase
                 );
 
@@ -197,11 +197,14 @@ public class ContadorLOC {
         }
     }
 
-    private ResultadoClase analizarClase(List<String> lineasCodigo, int inicioClase,
-            int finClase, String nombreClase) {
+    private ResultadoClase analizarClase(List<String> lineasCodigo, int indiceInicioClase,
+            int indiceFinClase, String nombreClase) {
         int tamanioClase = 0;
         int numeroMetodos = 0;
-        List<String> lineasClase = lineasCodigo.subList(inicioClase, finClase + 1);
+        List<String> lineasClase = lineasCodigo.subList(
+                indiceInicioClase,
+                indiceFinClase + 1
+        );
         List<String> lineasLogicasClase = normalizarLineasLogicas(lineasClase);
 
         for (String linea : lineasLogicasClase) {
@@ -215,11 +218,11 @@ public class ContadorLOC {
         return new ResultadoClase(nombreClase, numeroMetodos, tamanioClase);
     }
 
-    private int encontrarFinClase(List<String> lineasCodigo, int inicioClase) {
+    private int encontrarFinClase(List<String> lineasCodigo, int indiceInicioClase) {
         int balanceLlaves = 0;
         boolean encontroLlaveApertura = false;
 
-        for (int indice = inicioClase; indice < lineasCodigo.size(); indice++) {
+        for (int indice = indiceInicioClase; indice < lineasCodigo.size(); indice++) {
             String linea = lineasCodigo.get(indice);
 
             balanceLlaves += contarLlavesApertura(linea);
@@ -257,14 +260,17 @@ public class ContadorLOC {
             return false;
         }
 
-        int parentesis = lineaLimpia.indexOf('(');
-        String antesParentesis = lineaLimpia.substring(0, parentesis).trim();
+        int posicionParentesis = lineaLimpia.indexOf('(');
+        String textoAntesParentesis = lineaLimpia.substring(
+                0,
+                posicionParentesis
+        ).trim();
 
-        if (antesParentesis.contains(".")) {
+        if (textoAntesParentesis.contains(".")) {
             return false;
         }
 
-        String[] tokens = antesParentesis.split("\\s+");
+        String[] tokens = textoAntesParentesis.split("\\s+");
 
         if (tokens.length == 0) {
             return false;
@@ -290,39 +296,39 @@ public class ContadorLOC {
         List<String> lineasLogicas = normalizarLineasLogicas(lineasCodigo);
 
         for (String linea : lineasLogicas) {
-            List<String> variables = obtenerVariablesInicializadas(linea);
+            List<String> variablesInicializadas = obtenerVariablesInicializadas(linea);
 
-            for (String variable : variables) {
-                resultado.agregarVariableInicializada(variable);
+            for (String nombreVariableInicializada : variablesInicializadas) {
+                resultado.agregarVariableInicializada(nombreVariableInicializada);
             }
         }
     }
 
     private List<String> obtenerVariablesInicializadas(String linea) {
-        List<String> variables = new ArrayList<>();
+        List<String> variablesInicializadas = new ArrayList<>();
 
         if (linea == null) {
-            return variables;
+            return variablesInicializadas;
         }
 
         String lineaLimpia = linea.trim();
 
         if (!lineaLimpia.endsWith(";") || contienePalabraControl(lineaLimpia)) {
-            return variables;
+            return variablesInicializadas;
         }
 
         if (lineaLimpia.startsWith("return ") || lineaLimpia.startsWith("throw ")) {
-            return variables;
+            return variablesInicializadas;
         }
 
         // Se descartan comparaciones para evitar falsos positivos.
         if (lineaLimpia.contains("==") || lineaLimpia.contains("!=")
                 || lineaLimpia.contains(">=") || lineaLimpia.contains("<=")) {
-            return variables;
+            return variablesInicializadas;
         }
 
-        String sinPuntoComa = lineaLimpia.substring(0, lineaLimpia.length() - 1);
-        List<String> declaraciones = separarPorComasPrincipales(sinPuntoComa);
+        String lineaSinPuntoComa = lineaLimpia.substring(0, lineaLimpia.length() - 1);
+        List<String> declaraciones = separarPorComasPrincipales(lineaSinPuntoComa);
 
         for (int indice = 0; indice < declaraciones.size(); indice++) {
             String declaracion = declaraciones.get(indice).trim();
@@ -348,11 +354,11 @@ public class ContadorLOC {
             }
 
             if (esNombreVariableValido(nombreVariable)) {
-                variables.add(nombreVariable);
+                variablesInicializadas.add(nombreVariable);
             }
         }
 
-        return variables;
+        return variablesInicializadas;
     }
 
     private String obtenerNombreVariablePrimeraDeclaracion(String ladoIzquierdo) {
@@ -381,23 +387,23 @@ public class ContadorLOC {
             return false;
         }
 
-        List<String> partes = separarPorComasPrincipales(
+        List<String> segmentosDeclaracion = separarPorComasPrincipales(
                 linea.substring(0, linea.length() - 1)
         );
 
-        if (partes.size() <= 1) {
+        if (segmentosDeclaracion.size() <= 1) {
             return false;
         }
 
-        String primeraParte = partes.get(0).trim();
-        String izquierda = primeraParte;
-        int posicionAsignacion = obtenerPosicionAsignacion(primeraParte);
+        String primeraDeclaracion = segmentosDeclaracion.get(0).trim();
+        String ladoIzquierdoDeclaracion = primeraDeclaracion;
+        int posicionAsignacion = obtenerPosicionAsignacion(primeraDeclaracion);
 
         if (posicionAsignacion >= 0) {
-            izquierda = primeraParte.substring(0, posicionAsignacion).trim();
+            ladoIzquierdoDeclaracion = primeraDeclaracion.substring(0, posicionAsignacion).trim();
         }
 
-        String sinModificadores = quitarModificadores(izquierda);
+        String sinModificadores = quitarModificadores(ladoIzquierdoDeclaracion);
         String[] tokens = sinModificadores.split("\\s+");
 
         return tokens.length >= 2 && esNombreVariableValido(
@@ -406,14 +412,14 @@ public class ContadorLOC {
     }
 
     private int contarDeclaracionesMultiples(String linea) {
-        String sinPuntoComa = linea.substring(0, linea.length() - 1);
-        List<String> declaraciones = separarPorComasPrincipales(sinPuntoComa);
+        String lineaSinPuntoComa = linea.substring(0, linea.length() - 1);
+        List<String> declaraciones = separarPorComasPrincipales(lineaSinPuntoComa);
         return declaraciones.size();
     }
 
     private List<String> separarPorComasPrincipales(String texto) {
-        List<String> partes = new ArrayList<>();
-        StringBuilder actual = new StringBuilder();
+        List<String> segmentosSeparados = new ArrayList<>();
+        StringBuilder segmentoActual = new StringBuilder();
 
         int nivelParentesis = 0;
         int nivelAngulares = 0;
@@ -451,17 +457,17 @@ public class ContadorLOC {
                 // Solo se separan comas que no pertenecen a metodos o genericos.
                 if (caracter == ',' && nivelParentesis == 0
                         && nivelAngulares == 0) {
-                    partes.add(actual.toString());
-                    actual.setLength(0);
+                    segmentosSeparados.add(segmentoActual.toString());
+                    segmentoActual.setLength(0);
                     continue;
                 }
             }
 
-            actual.append(caracter);
+            segmentoActual.append(caracter);
         }
 
-        partes.add(actual.toString());
-        return partes;
+        segmentosSeparados.add(segmentoActual.toString());
+        return segmentosSeparados;
     }
 
     private int obtenerPosicionAsignacion(String texto) {
@@ -490,7 +496,7 @@ public class ContadorLOC {
     }
 
     private int contarCaracterFueraDeTexto(String linea, char caracterBuscado) {
-        int total = 0;
+        int totalCaracteresEncontrados = 0;
         boolean dentroCadena = false;
         boolean dentroCaracter = false;
 
@@ -505,11 +511,11 @@ public class ContadorLOC {
             }
 
             if (!dentroCadena && !dentroCaracter && caracter == caracterBuscado) {
-                total++;
+                totalCaracteresEncontrados++;
             }
         }
 
-        return total;
+        return totalCaracteresEncontrados;
     }
 
     private boolean esLlaveSola(String linea) {
@@ -545,21 +551,23 @@ public class ContadorLOC {
     }
 
     private String quitarModificadores(String texto) {
-        String resultado = texto.trim();
+        String textoSinModificadores = texto.trim();
         boolean huboCambio = true;
 
         while (huboCambio) {
             huboCambio = false;
 
             for (String modificador : MODIFICADORES) {
-                if (resultado.startsWith(modificador + " ")) {
-                    resultado = resultado.substring(modificador.length()).trim();
+                if (textoSinModificadores.startsWith(modificador + " ")) {
+                    textoSinModificadores = textoSinModificadores.substring(
+                            modificador.length()
+                    ).trim();
                     huboCambio = true;
                 }
             }
         }
 
-        return resultado;
+        return textoSinModificadores;
     }
 
     private boolean esModificador(String token) {
@@ -586,15 +594,15 @@ public class ContadorLOC {
     }
 
     private boolean estaEscapado(String linea, int indice) {
-        int contadorBarras = 0;
+        int cantidadBarrasInvertidas = 0;
         int posicion = indice - 1;
 
         while (posicion >= 0 && linea.charAt(posicion) == '\\') {
-            contadorBarras++;
+            cantidadBarrasInvertidas++;
             posicion--;
         }
 
-        return contadorBarras % 2 != 0;
+        return cantidadBarrasInvertidas % 2 != 0;
     }
 
     /**
@@ -605,7 +613,7 @@ public class ContadorLOC {
         private final int numeroPrograma;
         private final String nombreArchivo;
         private final int totalLineasFisicas;
-        private int totalLOC;
+        private int totalLoc;
         private final List<ResultadoClase> resultadosClase;
         private final List<String> variablesInicializadas;
 
@@ -638,11 +646,11 @@ public class ContadorLOC {
         }
 
         public int getTotalLOC() {
-            return totalLOC;
+            return totalLoc;
         }
 
-        public void setTotalLOC(int totalLOC) {
-            this.totalLOC = totalLOC;
+        public void setTotalLOC(int totalLoc) {
+            this.totalLoc = totalLoc;
         }
 
         public List<ResultadoClase> getResultadosClase() {
@@ -657,8 +665,8 @@ public class ContadorLOC {
             return variablesInicializadas;
         }
 
-        public void agregarVariableInicializada(String variable) {
-            variablesInicializadas.add(variable);
+        public void agregarVariableInicializada(String nombreVariable) {
+            variablesInicializadas.add(nombreVariable);
         }
     }
 

@@ -34,11 +34,11 @@ public class LimpiadorCodigo {
             boolean dentroCaracter = false;
 
             for (int indice = 0; indice < lineaOriginal.length(); indice++) {
-                char actual = lineaOriginal.charAt(indice);
-                char siguiente = obtenerSiguienteCaracter(lineaOriginal, indice);
+                char caracterActual = lineaOriginal.charAt(indice);
+                char siguienteCaracter = obtenerSiguienteCaracter(lineaOriginal, indice);
 
                 if (dentroComentarioBloque) {
-                    if (actual == '*' && siguiente == '/') {
+                    if (caracterActual == '*' && siguienteCaracter == '/') {
                         dentroComentarioBloque = false;
                         indice++;
                     }
@@ -47,29 +47,29 @@ public class LimpiadorCodigo {
                 }
 
                 // Los comentarios dentro de cadenas no deben eliminarse.
-                if (!dentroCadena && !dentroCaracter && actual == '/'
-                        && siguiente == '/') {
+                if (!dentroCadena && !dentroCaracter && caracterActual == '/'
+                        && siguienteCaracter == '/') {
                     break;
                 }
 
-                if (!dentroCadena && !dentroCaracter && actual == '/'
-                        && siguiente == '*') {
+                if (!dentroCadena && !dentroCaracter && caracterActual == '/'
+                        && siguienteCaracter == '*') {
                     dentroComentarioBloque = true;
                     indice++;
                     continue;
                 }
 
-                if (actual == '"' && !dentroCaracter
+                if (caracterActual == '"' && !dentroCaracter
                         && !estaEscapado(lineaOriginal, indice)) {
                     dentroCadena = !dentroCadena;
                 }
 
-                if (actual == '\'' && !dentroCadena
+                if (caracterActual == '\'' && !dentroCadena
                         && !estaEscapado(lineaOriginal, indice)) {
                     dentroCaracter = !dentroCaracter;
                 }
 
-                lineaLimpia.append(actual);
+                lineaLimpia.append(caracterActual);
             }
 
             lineasLimpias.add(lineaLimpia.toString());
@@ -87,15 +87,15 @@ public class LimpiadorCodigo {
     }
 
     private boolean estaEscapado(String linea, int indice) {
-        int contadorBarras = 0;
+        int cantidadBarrasInvertidas = 0;
         int posicion = indice - 1;
 
         while (posicion >= 0 && linea.charAt(posicion) == '\\') {
-            contadorBarras++;
+            cantidadBarrasInvertidas++;
             posicion--;
         }
 
         // Un numero impar de diagonales indica que el caracter esta escapado.
-        return contadorBarras % 2 != 0;
+        return cantidadBarrasInvertidas % 2 != 0;
     }
 }
